@@ -4,6 +4,7 @@ from .forms import *
 from django.views.generic import ListView,DetailView
 from django.views.generic import DeleteView,UpdateView
 from .models import *
+from . models import Projet_team
 # Create your views here.
 class ProjectCreationView(CreateView):
     form_class =ProjectCreationForm
@@ -36,9 +37,10 @@ class ProjectDetailView(DetailView):
     template_name = 'project/project_detail.html'
     context_object_name = 'project_detail'
     
-    # def get(self, request, *args, **kwargs):
-    #     team = Project.objects.filter(Project_id=self.kwargs['pk'])
-    #     return render(request, self.template_name, {'project_detail': self.get_object(),'team':team})
+    def get(self, request, *args, **kwargs):
+         team = Projet_team.objects.filter(project_id =self.kwargs['pk'])
+         module = Project_module.objects.filter(project_id=self.kwargs['pk'])
+         return render(request, self.template_name, {'project_detail': self.get_object(),'team':team,'module':module})
     
       
     
@@ -66,3 +68,66 @@ class ProjectTeamByProject(ListView):
     
     def get_queryset(self):
         return super().get_queryset().filter(project_id=self.kwargs['pk'])
+    
+class CreateProjectModule(CreateView):
+    model = Project_module
+    form_class = CreateProjectModuleForm
+    template_name = 'project/project_module_create.html'
+    success_url = '/project/list_project_module/'
+    
+        
+
+class ProjectModuleListByProject(ListView):
+    model = Project_module
+    template_name = 'project/project_module_list.html'
+    context_object_name = 'project_module_list'
+    
+    
+   # def get_queryset(self):
+       # return super().get_queryset().filter(project_id=self.kwargs['pk'])
+
+class ModuleUpdateView(UpdateView):
+    model = Project_module
+    form_class = CreateProjectModuleForm
+    template_name = 'project/project_module_create.html'
+    success_url = '/project/list_project_module/' 
+    
+class ModuleDeleteView(DeleteView):
+    model = Project_module
+    def get(self, request, *args, **kwargs):
+        return self.delete(request, *args, **kwargs)
+    
+    success_url = '/project/list_project_module/'
+
+class TeamDeleteView(DeleteView):
+    model = Projet_team
+    def get(self, request, *args, **kwargs):
+        return self.delete(request, *args, **kwargs)
+    
+    success_url = '/project/detail_project /'
+
+class CreateProjectTask(CreateView):
+    model = Task
+    form_class = CreateProjectTaskForm
+    template_name = 'project/project_task_create.html'
+    success_url = '/project/list_project_task/'
+
+class ProjectTaskListByProject(ListView):
+    model = Task
+    template_name = 'project/project_task_list.html'
+    context_object_name = 'project_task_list'
+
+class TaskUpdateView(UpdateView):
+    model = Task
+    form_class = CreateProjectModuleForm
+    template_name = 'project/project_task_create.html'
+    success_url = '/project/list_project_task/' 
+    
+class TaskDeleteView(DeleteView):
+    model = Task
+    def get(self, request, *args, **kwargs):
+        return self.delete(request, *args, **kwargs)
+    
+    success_url = '/project/list_project_task/'
+
+

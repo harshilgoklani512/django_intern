@@ -53,7 +53,7 @@
   <body>
     {% block content %}
     <div class="card">
-      <h4 class="card-header">PROJECTS</h4>
+      <h5 class="card-header">Projects</h5>
       <h5 class="card-header">
         <a href="{% url 'create_project' %}" class="btn btn-primary">Create</a>
       </h5>
@@ -80,14 +80,11 @@
               <td><span class="badge bg-label-primary me-1">Active</span></td>
               <td>
                 <div class="dropdown">
-                  <a class="dropdown-item" href="{% url 'update_project' project.id %}"
+                  <a class="dropdown-item" href="#"
                     ><i class="bx bx-edit-alt me-1"></i> Edit</a
                   >
-                  <a class="dropdown-item" href="{% url 'delete_project' project.id %}"
+                  <a class="dropdown-item" href="#"
                     ><i class="bx bx-trash me-1"></i> Delete</a
-                  >
-                  <a class="dropdown-item" href="{% url 'detail_project' project.id %}"
-                    ><i class="bx bx-select me-1"></i> Detail</a
                   >
                 </div>
               </td>

@@ -13,6 +13,10 @@ class Project(models.Model):
     class Meta:
         db_table = 'Project'
 
+    def __str__(self):
+        return self.title
+            
+
 class Projet_team(models.Model):
     project = models.ForeignKey(Project,on_delete=models.CASCADE)
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
@@ -25,6 +29,9 @@ class Status(models.Model):
 
     class Meta:
         db_table ='Status'
+
+    def __str__(self):
+        return self.statusname
 
 
 class Project_module(models.Model):

@@ -1,0 +1,90 @@
+{% extends './base.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    {% block content %}
+
+    <div class="card">
+      <div class="card-header p-3">
+        <h4 class="mb-0"><i class="fas fa-tasks me-2"></i>Task List</h4>
+      </div>
+      <!-- <div class="card-header">
+        <a href="{% url 'create_project_task' %}" class="btn btn-primary"
+          >Add Task</a
+        >
+      </div> -->
+      <div
+        class="card-body"
+        data-mdb-perfect-scrollbar="true"
+        style="position: relative"
+      >
+        <table class="table mb-0">
+          <thead>
+            <tr>
+              <!-- <th scope="col">Project</th>
+              <th scope="col">Module Name</th> -->
+              <th scope="col">Task</th>
+              <th scope="col">status</th>
+              <th scope="col">priority</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="table-border-bottom-0">
+            {% for t in project_task_list %}
+            <tr>
+              <!-- <td>
+                <i class="fas fa-angle-right fa-lg me-3"></i>
+
+                <strong>{{t.project}}</strong>
+              </td>
+              <td>{{t.module}}</td> -->
+              <td class="align-middle">{{t.description}}</td>
+              <td class="align-middle">{{t.status}}</td>
+              <td class="align-middle">
+                <!-- {{t.priority}} -->
+                <h6 class="mb-0">
+                  <span class="badge bg-danger">Medium Priority</span>
+                </h6>
+              </td>
+              <div class="dropdown">
+              <td class="align-middle">
+                <a
+                  href="{% url 'update_task' t.id %}"
+                  class="dropdown-item text-info"
+                  data-mdb-toggle="tooltip"
+                  title="Edit"
+                  ><i class="fas fa-pencil-alt me-3"></i
+                ></a>
+
+                <a
+                  href="{% url 'delete_task' t.id %}"
+                  class="dropdown-item text-danger"
+                  data-mdb-toggle="tooltip"
+                  title="Delete"
+                  ><i class="fas fa-trash-alt"></i
+                ></a>
+              </td>
+            </tr>
+
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="card-footer text-end p-3">
+        <a href="{% url 'create_project_task' %}" class="btn btn-primary"
+          >Add Task</a
+        >
+      </div>
+    </div>
+
+    {% endblock content %}
+  </body>
+</html>
+

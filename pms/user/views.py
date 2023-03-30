@@ -10,6 +10,8 @@ from django.contrib.auth.decorators import login_required
 from django import forms
 from django.views.generic import ListView
 from project.models import Project
+from django.utils.decorators import method_decorator
+from user.decorators import manager_required,developer_required
 
 
 # Create your views here.
@@ -74,11 +76,11 @@ class UserLoginView(LoginView):
     #success_url = "/"
     
     def get_redirect_url(self):
-        if self.redirect_authenticated_user:
+        if self.request.user.is_authenticated:
             if self.request.user.is_manager1:
-                return '/user/dashboard/'
+                return '/user/manager/dashboard/'
             else:
-                return '/developer/'
+                return '/user/developer/dashboard/'
         
     # def form_valid(self, form):
     #     response = super().form_valid(form)
@@ -132,7 +134,7 @@ def dashboard(request):
 def password(request):
     return render(request,'user/password.html')
 
-
+@method_decorator([login_required(login_url="user/login"),manager_required], name = 'dispatch')
 class ManagerDashboardView(ListView):            
     
     def get(self, request, *args, **kwargs):
@@ -143,7 +145,8 @@ class ManagerDashboardView(ListView):
         })
 
     template_name = 'user/manager_dashboard.html'
-    
+
+@method_decorator([login_required(login_url="user/login"),developer_required], name = 'dispatch')
 class DeveloperDashBoardView(ListView):
     
     model = User
@@ -157,3 +160,4 @@ class DeveloperDashBoardView(ListView):
         return super().get_queryset()
     
     template_name = 'user/developer_dashboard.html'
+
