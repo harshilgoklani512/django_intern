@@ -582,8 +582,36 @@
         </table>
       </div>
     </div> {% endcomment %}
-
-
+    <div class="col-3 mt-5">
+          <script>
+            var config = {
+              type: 'bar',
+              data: {
+                datasets: [{
+                  data: {{ data |safe }},
+                  backgroundColor: [
+                    'lightblue','lightgreen','pink','purple',
+                  ],
+                  borderColor: [ 'blue', 'green' ,'rgb(170, 51, 106)' ],
+                  borderWidth:1,
+                  label: 'Estimated Hours'
+                }],
+                labels: {{ labels |safe }}
+              },
+              options: {
+                responsive: true
+              }
+            };
+        
+            window.onload = function() {
+              var ctx = document.getElementById('pie-chart').getContext('2d');
+              window.myPie = new Chart(ctx, config);
+            };
+        
+          </script>
+    <div height="200" width="200">
+      <canvas id="pie-chart" width="130px" height="137.55px"></canvas>
+      </div>
 
     {% endblock content %}
   </body>

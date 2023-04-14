@@ -23,7 +23,15 @@ class ProjectListView(ListView):
     context_object_name = 'project_list'
     
     def get_queryset(self):
-        return super().get_queryset()    
+        queryset = super().get_queryset()
+        sort_by = self.request.GET.get('sort_by', 'title')
+        sort_by = self.request.GET.get('sort_by', 'technology')
+        direction = self.request.GET.get('direction', 'asc')
+        if direction == 'asc':
+            queryset = queryset.order_by(sort_by)
+        elif direction == 'desc':
+            queryset = queryset.order_by(f'-{sort_by}')
+        return queryset    
     
 
 class ProjectUpdateView(UpdateView):
@@ -36,11 +44,20 @@ class ProjectDetailView(DetailView):
     model = Project
     template_name = 'project/project_detail.html'
     context_object_name = 'project_detail'
+
+    labels=[]
+    data =[]
+    project = Project.objects.all().values_list('title',flat=True)
+    time = Project.objects.all().values_list('estimatedHours',flat=True)
+    for i in project:
+        labels.append(i)
+    for i in time:
+        data.append(i)
     
     def get(self, request, *args, **kwargs):
          team = Projet_team.objects.filter(project_id =self.kwargs['pk'])
          module = Project_module.objects.filter(project_id=self.kwargs['pk'])
-         return render(request, self.template_name, {'project_detail': self.get_object(),'team':team,'module':module})
+         return render(request, self.template_name, {'project_detail': self.get_object(),'team':team,'module':module,'labels':self.labels,'data':self.data})
     
       
     
@@ -119,7 +136,7 @@ class ProjectTaskListByProject(ListView):
 
 class TaskUpdateView(UpdateView):
     model = Task
-    form_class = CreateProjectModuleForm
+    form_class = CreateProjectTaskForm
     template_name = 'project/project_task_create.html'
     success_url = '/project/list_project_task/' 
     
@@ -129,5 +146,15 @@ class TaskDeleteView(DeleteView):
         return self.delete(request, *args, **kwargs)
     
     success_url = '/project/list_project_task/'
+
+class AssignProjectTask(CreateView):
+    form_class = AssignProjectTaskForm
+    template_name = 'project/project_task_assign.html'
+    success_url = '/project/assign_project_task/' 
+
+class ProjectTaskListView(ListView):
+    model = user_task
+    template_name = 'project/project_task_list_assign.html'
+    context_object_name = 'project_task_list_assign'
 
 

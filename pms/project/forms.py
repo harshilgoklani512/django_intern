@@ -24,4 +24,16 @@ class CreateProjectModuleForm(forms.ModelForm):
 class CreateProjectTaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = '__all__'     
+        fields = '__all__' 
+
+class CreateProjectTaskForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = '__all__'    
+
+class AssignProjectTaskForm(forms.ModelForm):
+    user = forms.ModelChoiceField(queryset=User.objects.filter(is_developer=True))
+
+    class Meta:
+        model = user_task
+        fields = '__all__'

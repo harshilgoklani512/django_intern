@@ -9,7 +9,7 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django import forms
 from django.views.generic import ListView
-from project.models import Project
+from project.models import *
 from django.utils.decorators import method_decorator
 from user.decorators import manager_required,developer_required
 
@@ -139,12 +139,42 @@ class ManagerDashboardView(ListView):
     
     def get(self, request, *args, **kwargs):
         project = Project.objects.all().values()
+        project_count = Project.objects.count()
+        module_count = Project_module.objects.count()
+        task_count = Task.objects.count()
         
         return render(request, 'user/manager_dashboard.html',{
             'projects':project,
+            'labels':self.labels,
+            'data':self.data,
+            # 'labels1':self.labels1,
+            # 'data1':self.data1,
+            'project_count': project_count,
+            'module_count': module_count,
+            'task_count': task_count,
         })
 
     template_name = 'user/manager_dashboard.html'
+
+    labels=[]
+    data =[]
+    # labels1=[]
+    # data1=[]
+    project = Project.objects.all().values_list('title',flat=True)
+    time = Project.objects.all().values_list('estimatedHours',flat=True)
+    # project1=Project.objects.all().values_list('technology',flat=True)
+    # startdate = Project.objects.all().values_list('estimatedHours',flat=True)
+    
+    for i in project:
+        labels.append(i)
+    for i in time:
+        data.append(i)
+    # for i in project1:
+    #     labels1.append(i)
+    # for i in startdate:
+    #     data1.append(i)
+        
+
 
 @method_decorator([login_required(login_url="user/login"),developer_required], name = 'dispatch')
 class DeveloperDashBoardView(ListView):
@@ -152,7 +182,24 @@ class DeveloperDashBoardView(ListView):
     model = User
     
     def get(self, request, *args, **kwargs):
-        return super().get(request, *args, **kwargs)
+        high_priority = Task.objects.filter(priority='High').count()
+        low_priority = Task.objects.filter(priority='Low').count()
+        normal_priority = Task.objects.filter(priority='Normal').count()
+        completed_task = Task.objects.filter(status="Completed").count()
+        progress_task = Task.objects.filter(status="inProgress").count()
+        pending_task = Task.objects.filter(status="Pending").count()
+        task_count = Task.objects.count()
+        
+        
+        return render(request, 'user/developer_dashboard.html',{
+            'high_priority':high_priority,
+            'low_priority':low_priority,
+            'normal_priority':normal_priority,
+            'completed_task':completed_task,
+            'progress_task':progress_task,
+            'pending_task':pending_task,
+            'task_count':task_count,
+        })
     
     
     def get_queryset(self):
