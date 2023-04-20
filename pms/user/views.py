@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from django.views.generic.edit import CreateView,FormView
+from django.views.generic import CreateView,FormView,DetailView
 from .models import User
 from .forms import ManagerRegisterForm,DeveloperRegistrationForm
 from django.contrib.auth import login
@@ -182,6 +182,10 @@ class DeveloperDashBoardView(ListView):
     model = User
     
     def get(self, request, *args, **kwargs):
+        user = request.user
+        print(user)
+        # task = Task.objects.all()
+        user_tasks = user.user_task_set.all()
         high_priority = Task.objects.filter(priority='High').count()
         low_priority = Task.objects.filter(priority='Low').count()
         normal_priority = Task.objects.filter(priority='Normal').count()
@@ -189,9 +193,17 @@ class DeveloperDashBoardView(ListView):
         progress_task = Task.objects.filter(status="inProgress").count()
         pending_task = Task.objects.filter(status="Pending").count()
         task_count = Task.objects.count()
+        loggedInuserTask = user_task.objects.filter(user=request.user).values()
+    
+        #print(taskDetail)
+        
+
+        print(loggedInuserTask)
         
         
         return render(request, 'user/developer_dashboard.html',{
+            'user_tasks': user_tasks,
+            # 'task':task,
             'high_priority':high_priority,
             'low_priority':low_priority,
             'normal_priority':normal_priority,
@@ -208,3 +220,32 @@ class DeveloperDashBoardView(ListView):
     
     template_name = 'user/developer_dashboard.html'
 
+
+class TaskDetailView(DetailView):
+    model = Task
+    template_name = 'user/task_detail.html'
+    context_object_name = 'task_detail'  
+    
+    def get(self, request, *args, **kwargs):
+        task = Task.objects.filter(project_id=self.kwargs['pk'])
+        user = request.user
+        task1 = user_task.objects.filter(user = request.user,taskid_id=self.kwargs['pk']).values('id','taskid_id__status','taskid_id__project__title','taskid_id__project__startdate','taskid_id__project__completionDate','taskid_id__priority','taskid_id__title','taskid_id__description')   
+        task_detail = user.user_task_set.all()
+        return render(request, self.template_name,{
+            'task_detail': self.get_object(),
+            'task': task,
+            'detail': task1
+        })
+
+class TaskBoardView(ListView):
+    model = User
+    template_name = 'user/task_board.html'
+    context_object_name = 'task_board'
+
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        user_tasks = user.user_task_set.all()
+
+        return render(request, 'user/task_board.html',{
+            'user_tasks': user_tasks,
+        })

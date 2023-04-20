@@ -104,16 +104,34 @@
                 <thead>
                   <tr>
                     <th>Task</th>
-                    <th>Status</th>
                     <th>Priority</th>
+                    <th>Status</th>
+                    {% comment %} <th>Status</th>
+                    <th>Priority</th> {% endcomment %}
                   </tr>
 
                 </thead>
                 <tbody>
-                  {% for task in project_task_list_assign %}
-                  <td>{{task.title}}</td>
+                  {% for user_task in user_tasks %}
+                  <tr>
+                  <td>
+                    <h6><a href="{% url 'detail_task' user_task.taskid.id %}" style="text-decoration : none; color:black">{{user_task.taskid.title}}</a></h6>
+                    <span>{{user_task.taskid.description}}</span>
+                  </td>
+                  <td>
+                    {% if user_task.taskid.priority == 'High' %}
+                  <span class="badge bg-danger me-1">{{user_task.taskid.priority}}</span>
+                  {% elif user_task.taskid.priority == 'Low' %}
+                  <span class="badge bg-success me-1">{{user_task.taskid.priority}}</span>
+                  {% else %}
+                  <span class="badge bg-warning me-1">{{user_task.taskid.priority}}</span>
+                  {% endif %}
+                  </td>
+
+                  <td>{{user_task.taskid.status}}</td>
                   {% endfor %}
-                  {% comment %} <td>
+                </tr>
+                  {% comment %} <td>  
                     <h6 class="mb-0">New code Update on github</h6>
                     <span>It is a long established fact that a reader will be distracted...</span>
                   </td> {% endcomment %}

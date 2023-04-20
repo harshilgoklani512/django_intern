@@ -37,8 +37,9 @@
           <table class="table table-vcenter table hover mb-0">
             <thead>
               <tr>
-                <th>Projects</th>
-                <th>Modules</th>
+                <!-- <th>Projects</th>
+                <th>Modules</th> -->
+                <th>Title</th>
                 <th>Status</th>
                 <th>Description</th>
                 <th>Priority</th>
@@ -50,21 +51,24 @@
             <tbody class="table-border-bottom-0">
               {% for project in project_task_list %}
               <tr>
-                <td class="align-middle">
+                <!-- <td class="align-middle">
 
                   <i class="fas fa-angle-right fa-lg  me-3"></i>
 
                   <strong>{{project.project}}</strong>
 
                 </td>
-                <td class="align-middle">{{project.module}}</td>
+                <td class="align-middle">{{project.module}}</td> -->
+                <td class="align-middle"><i class="fas fa-angle-right fa-lg  me-3"></i>
+                  <strong>{{project.title}}</strong>
+                </td>
 
                 <td class="align-middle">
                   {% if project.status == 'Completed' %}
                   <span class="badge bg-label-primary me-1">{{project.status}}</span>
 
                   {% elif project.status == 'Pending' %}
-                  <span class="badge bg-label-warning me-1">{{project.status}}</span>
+                  <span class="badge bg-label-danger me-1">{{project.status}}</span>
 
                   {% else %}
                   <span class="badge bg-label-dark me-1">{{project.status}}</span>

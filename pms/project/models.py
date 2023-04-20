@@ -66,7 +66,7 @@ class Task(models.Model):
         db_table = 'Task'
 
     def __str__(self):
-        return self.description
+        return self.title
 
 class user_task(models.Model):
     #user_task_id = models.IntegerField()

@@ -15,5 +15,8 @@ urlpatterns = [
  path('password/',views.password,name='password'),
  path('manager/dashboard/',ManagerDashboardView.as_view(),name='manager_dashboard'),
  path('developer/dashboard/',DeveloperDashBoardView.as_view(),name='developer_dashboard'),
- 
+ path('detail_task/<int:pk>',TaskDetailView.as_view(),name='detail_task'),
+ path('detail_task/',TaskDetailView.as_view(),name='detail_task'),
+ path('task_board/',TaskBoardView.as_view(),name='task_board'),
+
 ]
