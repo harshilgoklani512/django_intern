@@ -1,5 +1,7 @@
 {% extends './base.html' %} 
 {%load crispy_forms_tags %}
+{% block content %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -7,9 +9,133 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+
+    <style>
+      #toaster1 {
+        z-index: 1051;
+        position: fixed;
+        top: 25px;
+        right: 10px;
+        background-color: #333333dd;
+        color: #fff;
+        display: none;
+      }
+
+      #toaster2 {
+        z-index: 1051;
+        position: fixed;
+        top: 25px;
+        right: 10px;
+        background-color: #333333dd;
+        color: #fff;
+        display: none;
+      }
+    </style>
   </head>
   <body>
-    {% block content %}
+    
+    
+
+<script>
+  function showToaster(message) {
+    var toaster = document.getElementById("toaster1");
+    var toastercontent = document.getElementById("toastercontent1");
+    toastercontent.innerHTML = message;
+    toaster.style.display = "block";
+    setTimeout(function () {
+      toaster.style.display = "none";
+    }, 3000); // hide after 5 seconds
+  }
+</script>
+
+
+
+
+<script type="text/javascript">
+  function DeleteData(id) {
+    if (confirm("Are you sure you want to delete?")) {
+      $.ajax({
+        type: "GET",
+        url: "/project/delete_team/" + id,
+        success: function (data) {
+          console.log(data);
+
+          //alert("Deleted successfully");
+          showToaster("Your Team Member has been deleted successfully.");
+          setTimeout(() => {
+          location.reload();
+           }, 3000);
+        },
+        error: function (data) {
+          showToaster("Your Team Member has been deleted successfully.");
+          setTimeout(() => {
+          location.reload();
+           }, 3000);
+        },
+      });
+    }
+  }
+</script>
+
+<script>
+  function showToaster1(message) {
+    var toaster1 = document.getElementById("toaster2");
+    var toastercontent1 = document.getElementById("toastercontent2");
+    toastercontent1.innerHTML = message;
+    toaster1.style.display = "block";
+    setTimeout(function () {
+      toaster1.style.display = "none";
+    }, 3000); // hide after 5 seconds
+  }
+</script>
+
+
+
+
+<script type="text/javascript">
+  function DeleteData1(id) {
+    if (confirm("Are you sure you want to delete?")) {
+      $.ajax({
+        type: "GET",
+        url: "/project/delete_module/" + id,
+        success: function (data) {
+          console.log(data);
+
+          //alert("Deleted successfully");
+          showToaster("Your Module has been deleted successfully.");
+          setTimeout(() => {
+          location.reload();
+           }, 3000);
+        },
+        error: function (data) {
+          showToaster("Your Module has been deleted successfully.");
+          setTimeout(() => {
+          location.reload();
+           }, 3000);
+        },
+      });
+    }
+  }
+</script>
+
+<div class="toast" role="alert" aria-live="assertive" aria-atomic="true" id="toaster2">
+  <div class="toast-header">
+    <strong class="me-auto">Project Management System</strong>
+  </div>
+  <div class="toast-body" id="toastercontent2">
+    
+  </div>
+</div>
+
+
+<div class="toast" role="alert" aria-live="assertive" aria-atomic="true" id="toaster1">
+  <div class="toast-header">
+    <strong class="me-auto">Project Management System</strong>
+  </div>
+  <div class="toast-body" id="toastercontent1">
+    
+  </div>
+</div>
 
     <div class="row">
       <!-- Order Statistics -->
@@ -469,17 +595,23 @@
                 
                 {% for t in team %}
                 <tr>
-                  <td class="align-middle" class="align-middle">
+                  <td class="align-middle">
                     <i class="fas fa-angle-right fa-lg text-danger  me-3"></i>
                     <strong>{{t.user.username}}</strong>
                   </td>
                   <td><span class="badge bg-label-primary me-1">Active</span></td>
-                  <td class="align-middle" class="align-middle">
-                    <a
+                  <td class="align-middle">
+                    <!-- <a
                     class="dropdown-item"
                     href="{% url 'delete_team' t.id %}"
                     ><i class="bx bx-trash me-1 text-danger"></i> Remove</a
+                  > -->
+                  <button
+                        onclick="DeleteData({{t.id}})"
+                        class="dropdown-item"
                   >
+                    <i class="bx bx-trash me-1 text-danger"></i>Delete
+                  </button>
                   </td>
                 </tr>
     
@@ -504,7 +636,7 @@
         <table class="table">
           <thead>
             <tr>
-              <th>Project</th>
+              <!-- <th>Project</th> -->
               <th>Module Name</th>
               <th>Description</th>
               <th>Estimated Hours</th>
@@ -516,10 +648,10 @@
             <tr>
               <td class="align-middle">
                 <i class="fas fa-angle-right fa-lg text-danger  me-3"></i>
-                <strong>{{m.project.title}}</strong>
+                <strong>{{m.moduelename}}</strong>
                 
               </td>
-              <td class="align-middle">{{m.moduelename}}</td>
+              <!-- <td class="align-middle">{{m.moduelename}}</td> -->
               <td class="align-middle">{{m.description}}</td>
               <td class="align-middle">{{m.estimatedHours}}</td>
               <!-- <td><span class="badge bg-label-primary me-1">Active</span></td> -->
@@ -532,10 +664,16 @@
                     href="{% url 'update_module' m.id %}"
                     ><i class="bx bx-edit-alt me-1 text-primary"></i> Edit</a
                   >
+                  <button
+                        onclick="DeleteData1({{m.id}})"
+                        class="dropdown-item"
+                  >
+                    <i class="bx bx-trash me-1 text-danger"></i>Delete
+                  </button>
                   <a
                     class="dropdown-item"
-                    href="{% url 'delete_module' m.id %}"
-                    ><i class="bx bx-trash me-1 text-danger"></i> Delete</a
+                    href="{% url 'detail_module' m.id %}"
+                    ><i class="bx bx-detail me-1 text-warning"></i> Detail</a
                   >
                   
                 </div>
@@ -590,10 +728,24 @@
                 datasets: [{
                   data: {{ data |safe }},
                   backgroundColor: [
-                    'lightblue','lightgreen','pink','purple',
-                  ],
-                  borderColor: [ 'blue', 'green' ,'rgb(170, 51, 106)' ],
-                  borderWidth:1,
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(255, 159, 64, 0.2)',
+                      'rgba(153, 102, 255, 0.2)',
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(255, 205, 86, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(201, 203, 207, 0.2)'
+                      ],
+                      borderColor: [
+                      'rgb(255, 99, 132)',
+                      'rgb(255, 159, 64)',
+                      'rgb(153, 102, 255)',
+                      'rgb(75, 192, 192)',
+                      'rgb(255, 205, 86)',
+                      'rgb(54, 162, 235)',
+                      'rgb(201, 203, 207)'
+                      ],
+                      borderWidth: 1,
                   label: 'Estimated Hours'
                 }],
                 labels: {{ labels |safe }}

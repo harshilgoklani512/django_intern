@@ -19,6 +19,7 @@ urlpatterns = [
     path('list_project_module/',ProjectModuleListByProject.as_view(),name='project_module_list'),
     path('delete_module/<int:pk>',ModuleDeleteView.as_view(),name='delete_module'),
     path('update_module/<int:pk>',ModuleUpdateView.as_view(),name='update_module'),
+    path('detail_module/<int:pk>',ModuleDetailView.as_view(),name='detail_module'),
 
     #path('detail_project/<int:pk>',ProjectDetailView.as_view(),name='detail_project'),
 
@@ -29,6 +30,7 @@ urlpatterns = [
     path('list_project_task/',ProjectTaskListByProject.as_view(),name='projectask_list'),
     path('delete_task/<int:pk>',TaskDeleteView.as_view(),name='delete_task'),
     path('update_task/<int:pk>',TaskUpdateView.as_view(),name='update_task'),
+    path('delete_user_task/<int:pk>',UserTaskDeleteView.as_view(),name='delete_user_task'),
     
     path('assign_task/<int:pk>',AssignProjectTask.as_view(),name='assign_task'),
     path('assign_project_task/',ProjectTaskListView.as_view(),name='assign_project_task'),

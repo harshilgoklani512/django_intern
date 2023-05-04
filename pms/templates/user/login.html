@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
     {% load static %}
   <head>
@@ -11,68 +10,104 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
     <link rel="stylesheet" href="{% static 'css/login.css' %}" />
   </head>
-  <body class="bg-info">
-    <div class="container">
-      <!-- Login Form Start -->
-      <div class="row justify-content-center wrapper" id="login-box">
-        <div class="col-lg-10 my-auto myShadow">
-          <div class="row">
-            <div class="col-lg-7 bg-white p-4">
-              <h1 class="text-center font-weight-bold text-primary">Sign in to Account</h1>
-              <hr class="my-3" />
-
-              <form action="#" method="post" class="px-3" id="login-form">
-                {% csrf_token %}
-                <div class="input-group input-group-lg form-group">
-                  <div class="input-group-prepend">
-                    
-                  </div>
-                  {% comment %} <input type="email" id="email" name="email" class="form-control rounded-0" placeholder="E-Mail" required /> {% endcomment %}
-                <label>Username</label> 
-                {{form.username}}
-                </div>
-                <div class="input-group input-group-lg form-group">
-                  <div class="input-group-prepend">
-                    
-                  </div>
-                  {% comment %} <input type="password" id="password" name="password" class="form-control rounded-0" minlength="5" placeholder="Password" required autocomplete="off" /> {% endcomment %}
-                <label>Paasword</label>
-                {{form.password}}
-                </div>
-                <div class="form-group clearfix">
-                  <div class="custom-control custom-checkbox float-left">
-                    <input type="checkbox" class="custom-control-input" id="customCheck" name="rem" />
-                    <label class="custom-control-label" for="customCheck">Remember me</label>
-                  </div>
-                  <div class="forgot float-right">
-                    <a href="{% url 'password' %}" id="forgot-link">Forgot Password?</a>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <input type="submit" id="login-btn" value="Sign In" class="btn btn-primary btn-lg btn-block myBtn" />
-                </div>
-              </form>
-            </div>
-            <div class="col-lg-5 d-flex flex-column justify-content-center myColor p-4">
-              <h1 class="text-center font-weight-bold text-white">Hello Friends!</h1>
-              <hr class="my-3 bg-light myHr" />
-              <p class="text-center font-weight-bolder text-light lead">Enter your personal details and start your journey with us!</p>
-              <button class="btn btn-outline-light btn-lg align-self-center font-weight-bolder mt-4 myLinkBtn" id="register-link">
-                <a href="{% url 'signup' %}" style="color: black">Sign Up</a>
+  <section class="vh-100">
+    <div class="container-fluid h-custom">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-md-9 col-lg-6 col-xl-5">
+          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+            class="img-fluid" alt="Sample image">
+        </div>
+        <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+          <form action="#" method="post" class="px-3" id="login-form">
+            {% csrf_token %}
+            <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
+              {% comment %} <p class="lead fw-normal mb-0 me-3">Sign in with</p>
+              <button type="button" class="btn btn-primary btn-floating mx-1">
+                <i class="fab fa-facebook-f"></i>
               </button>
+  
+              <button type="button" class="btn btn-primary btn-floating mx-1">
+                <i class="fab fa-twitter"></i>
+              </button>
+  
+              <button type="button" class="btn btn-primary btn-floating mx-1">
+                <i class="fab fa-linkedin-in"></i>
+              </button> {% endcomment %}
             </div>
-          </div>
+  
+            <div class=" d-flex align-items-center my-4">
+              {% comment %} <p class="text-center fw-bold mx-3 mb-0">Or</p> {% endcomment %}
+            </div>
+  
+            <!-- Email input -->
+            <div class="d-flex flex-row align-items-center mb-4">
+              <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+              <input type="text" id="form3Example1c" class="form-control" style="margin-left: 10px;" placeholder="Enter Your Name" {{form.username}}
+              <div class="form-outline flex-fill mb-0">
+            </div>
+            </div>
+  
+            <!-- Password input -->
+            <div class="d-flex flex-row align-items-center mb-4">
+              <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+              
+                <input type="password" id="form3Example4c" class="form-control" style="margin-left: 10px;" placeholder="Enter Password" {{form.password}} 
+                <div class="form-outline flex-fill mb-0">
+              </div>
+            </div>
+  
+            <div class="d-flex justify-content-between align-items-center">
+              <!-- Checkbox -->
+              <div class="form-check mb-0">
+                
+                {% comment %} <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" /> {% endcomment %}
+                <label class="form-check-label" for="form2Example3">
+                  Remember me
+                </label>
+              </div>
+              <a href="#!" class="text-body">Forgot password?</a>
+            </div>
+  
+            <div class="text-center text-lg-start mt-4 pt-2">
+              {% comment %} <button type="button" class="btn btn-primary btn-lg"
+                style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button> {% endcomment %}
+                <input type="submit"  value="Sign In" class="btn btn-primary btn-lg" />
+                {% comment %} <input type="submit" id="login-btn" value="Sign In" class="btn btn-primary btn-lg btn-block myBtn" /> {% endcomment %}
+              <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="{% url 'signup' %}"
+                  class="link-danger">Register</a></p>
+            </div>
+  
+          </form>
         </div>
       </div>
-      <!-- Login Form End -->
-
-      
-
-      
-
+    </div>
+    {% comment %} <div
+      class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-primary">
+      <!-- Copyright -->
+      <div class="text-white mb-3 mb-md-0">
+        Copyright © 2020. All rights reserved.
       </div>
-      <!-- jQuery CDN -->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-      <script src="{% static 'js/login.js' %}"></script>
+      <!-- Copyright -->
+  
+      <!-- Right -->
+      <div>
+        <a href="#!" class="text-white me-4">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="#!" class="text-white me-4">
+          <i class="fab fa-twitter"></i>
+        </a>
+        <a href="#!" class="text-white me-4">
+          <i class="fab fa-google"></i>
+        </a>
+        <a href="#!" class="text-white">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </div>
+      <!-- Right -->
+    </div> {% endcomment %}
+  </section>
+
+  <script src="{% static 'js/login.js' %}"></script>
     </body>
   </html>

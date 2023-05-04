@@ -56,7 +56,7 @@
     <div id="layoutSidenav_content">
       <main>
           <div class="container-fluid px-1">
-              <h2 class="mt-2">Welcome Admin!</h2>
+              <h2 class="mt-2">Welcome, {{ request.user.username }}!</h2>
               <ol class="breadcrumb mb-4">
                   <li class="breadcrumb-item active">Dashboard</li>
               </ol>

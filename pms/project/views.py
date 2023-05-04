@@ -116,6 +116,19 @@ class ModuleDeleteView(DeleteView):
     
     success_url = '/project/list_project_module/'
 
+class ModuleDetailView(DetailView):
+    model = Project_module
+    template_name = 'project/module_detail.html'
+    context_object_name = 'module_detail'
+    
+   
+    def get(self, request, *args, **kwargs):
+        # module = ProjectModule.objects.filter(project=self.kwargs['pk']).values()
+        # print(module)
+        task = Task.objects.filter(module_id=self.kwargs['pk']).values()
+        print("task.....",task)
+        return render(request, self.template_name, {'project_detail': self.get_object(),'task': task})
+
 class TeamDeleteView(DeleteView):
     model = Projet_team
     def get(self, request, *args, **kwargs):
@@ -146,6 +159,13 @@ class TaskDeleteView(DeleteView):
         return self.delete(request, *args, **kwargs)
     
     success_url = '/project/list_project_task/'
+
+class UserTaskDeleteView(DeleteView):
+    model = user_task
+    def get(self, request, *args, **kwargs):
+        return self.delete(request, *args, **kwargs)
+
+    success_url = '/project/assign_project_task/'
 
 class AssignProjectTask(CreateView):
     form_class = AssignProjectTaskForm

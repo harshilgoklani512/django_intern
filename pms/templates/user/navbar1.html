@@ -33,7 +33,7 @@
       style="background: linear-gradient(to right, #ff9b44 0%, #fc6075 100%)"
     >
       <!-- Navbar Brand-->
-      <a class="navbar-brand ps-3" href="{% url 'manager_dashboard' %}">
+      <a class="navbar-brand ps-3" href="{% url 'developer_dashboard' %}">
         <span style="font-family: 'Nunito', sans-serif"
           >PROJECT MANAGEMENT</span
         ></a
@@ -89,14 +89,14 @@
           <div class="sb-sidenav-menu">
             <div class="nav">
               <div class="sb-sidenav-menu-heading">Core</div>
-              <a class="nav-link" href="{% url 'manager_dashboard' %}">
+              <a class="nav-link" href="{% url 'developer_dashboard' %}">
                 <div class="sb-nav-link-icon">
                   <i class="fas fa-tachometer-alt"></i>
                 </div>
                 Dashboard
               </a>
               <!-- <div class="sb-sidenav-menu-heading">Interface</div> -->
-              <a
+              <!-- <a
                 class="nav-link collapsed"
                 href="#"
                 data-bs-toggle="collapse"
@@ -185,7 +185,7 @@
                     >Module List</a
                   >
                 </nav>
-              </div>
+              </div> -->
               <a
                 class="nav-link collapsed"
                 href="#"
@@ -209,11 +209,14 @@
                 data-bs-parent="#sidenavAccordion"
               >
                 <nav class="sb-sidenav-menu-nested nav">
-                  <a class="nav-link" href="{% url 'create_project_task' %}"
+                  <!-- <a class="nav-link" href="{% url 'create_project_task' %}"
                     >Add Task</a
                   >
                   <a class="nav-link" href="{% url 'projectask_list' %}"
                     >Tasks List</a
+                  > -->
+                  <a class="nav-link" href="{% url 'task_board' %}"
+                    >Tasks Board</a
                   >
                 </nav>
               </div>
